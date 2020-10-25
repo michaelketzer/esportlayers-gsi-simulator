@@ -1,4 +1,6 @@
 import { app, BrowserWindow } from "electron";
+const powerSaveBlocker = require('electron').powerSaveBlocker;
+powerSaveBlocker.start('prevent-app-suspension');
 
 declare const ENVIRONMENT: String;
 
@@ -13,11 +15,12 @@ let win: BrowserWindow | null = null;
 function createWindow() {
     win = new BrowserWindow({
         width: 800,
-        height: 600,
+        height: 500,
         webPreferences: {
+            backgroundThrottling: false,
             nodeIntegration: true,
-            enableRemoteModule: true
-        }
+            enableRemoteModule: true,
+        },
     });
 
     if (IS_DEV) {
